@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -73,7 +72,7 @@ class CardMinhasSeparacoes extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "PRÉ-ORDEM:\t\t${grupoSepApp.preoc.toString()}",
+                      "ORDEM - CARGA:\t\t${grupoSepApp.preoc.toString()}",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 12.sp,

@@ -61,6 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -70,173 +72,181 @@ class _LoginScreenState extends State<LoginScreen> {
           exit(0);
         },
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: const Color.fromRGBO(42, 44, 43, 1),
-          body: Container(
-            padding: const EdgeInsets.all(20),
-            child: Stack(children: [
-              FadeAnimation(
-                1.4,
-                Align(
-                  alignment: const Alignment(-4.00, -1.35),
-                  child: Image.asset(
-                    "assets/images/box2.png",
-                    color:
-                        const Color.fromRGBO(196, 161, 109, 1).withOpacity(0.4),
-                  ),
-                ),
-              ),
-              FadeAnimation(
-                1.6,
-                Align(
-                  alignment: const Alignment(5.80, 0.10),
-                  child: Image.asset(
-                    "assets/images/box.png",
-                    color:
-                        const Color.fromRGBO(196, 161, 109, 1).withOpacity(0.4),
-                  ),
-                ),
-              ),
-              FadeAnimation(
-                1.8,
-                Align(
-                  alignment: const Alignment(-4.50, 1.35),
-                  child: Image.asset(
-                    "assets/images/box2.png",
-                    color:
-                        const Color.fromRGBO(196, 161, 109, 1).withOpacity(0.4),
-                  ),
-                ),
-              ),
-              SingleChildScrollView(
-                child:
-                    //  Align(
-                    //    alignment: Alignment.centerRight,
-                    //    child: Image.asset("images/box.png"),
-                    //  ),
-
-                    Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const LogoLoginComponent(),
-                    FormLoginComponent(
-                      keyForm: _formKey,
-                      nomeController: _nomeController,
-                      senhaController: _senhaController,
+          body: Center(
+            child: SizedBox(
+              height: queryData.size.height,
+              child: Stack(children: [
+                Positioned(
+                  bottom: queryData.size.height * 0.7,
+                  right: queryData.size.width * 0.6,
+                  child: FadeAnimation(
+                    1.4,
+                    Image.asset(
+                      "assets/images/box2.png",
+                      color: const Color.fromRGBO(196, 161, 109, 1)
+                          .withOpacity(0.4),
                     ),
-                    SizedBox(
-                      width: double.infinity - 20,
-                      height: 50,
-                      child: OutlinedButton(
-                        child: Text(
-                          "Entrar",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 12.sp,
+                  ),
+                ),
+                Positioned(
+                  top: queryData.size.height * 0.3,
+                  left: queryData.size.width * 0.6,
+                  child: FadeAnimation(
+                    1.6,
+                    Image.asset(
+                      "assets/images/box.png",
+                      color: const Color.fromRGBO(196, 161, 109, 1)
+                          .withOpacity(0.4),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: queryData.size.height * 0.7,
+                  right: queryData.size.width * 0.6,
+                  child: FadeAnimation(
+                    1.8,
+                    Image.asset(
+                      "assets/images/box2.png",
+                      color: const Color.fromRGBO(196, 161, 109, 1)
+                          .withOpacity(0.4),
+                    ),
+                  ),
+                ),
+                SingleChildScrollView(
+                  child: Center(
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const LogoLoginComponent(),
+                          FormLoginComponent(
+                            keyForm: _formKey,
+                            nomeController: _nomeController,
+                            senhaController: _senhaController,
                           ),
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                          SizedBox(
+                            width: double.infinity - 20,
+                            height: 50,
+                            child: OutlinedButton(
+                              child: Text(
+                                "Entrar",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 12.sp,
+                                ),
+                              ),
+                              style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                backgroundColor:
+                                    const Color.fromRGBO(0, 162, 180, 1),
+                              ),
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  var connectivityResult = await (Connectivity()
+                                      .checkConnectivity());
+                                  if (connectivityResult ==
+                                      ConnectivityResult.mobile) {
+                                    Get.snackbar(
+                                      "Sem conexão com a internet!",
+                                      "Verifique sua conexão e tente novamente!",
+                                      icon: const Icon(
+                                        Icons
+                                            .signal_cellular_connected_no_internet_4_bar,
+                                        color: Colors.white,
+                                      ),
+                                      snackPosition: SnackPosition.TOP,
+                                      backgroundColor: Colors.red,
+                                      colorText: Colors.white,
+                                    );
+                                  } else if (connectivityResult ==
+                                      ConnectivityResult.wifi) {
+                                    _onLoading();
+                                    saveLogin(
+                                      _nomeController.text.toString(),
+                                      _senhaController.text.toString(),
+                                    );
+                                    controller
+                                        .login(
+                                          _nomeController.text.toString(),
+                                          _senhaController.text.toString(),
+                                        )
+                                        .then(
+                                          (value) => {
+                                            Timer(
+                                                const Duration(seconds: 2),
+                                                () => {
+                                                      if (value == "S")
+                                                        {
+                                                          Get.offAll(
+                                                              const HomeSeparadorScreen())
+                                                        }
+                                                      else if (value == "C")
+                                                        {
+                                                          Get.offAll(
+                                                              const HomeConferenteScreen())
+                                                        }
+                                                      else
+                                                        {
+                                                          _onLoading(),
+                                                          Get.snackbar(
+                                                            value,
+                                                            "Usuário ou senha inexistente!",
+                                                            snackPosition:
+                                                                SnackPosition
+                                                                    .TOP,
+                                                            backgroundColor:
+                                                                Colors.red,
+                                                            colorText:
+                                                                Colors.white,
+                                                          )
+                                                        }
+                                                    }),
+                                          },
+                                        );
+                                  } else {
+                                    Get.snackbar(
+                                      "Sem conexão com a internet!",
+                                      "Verifique sua conexão e tente novamente!",
+                                      icon: const Icon(
+                                        Icons
+                                            .signal_cellular_connected_no_internet_4_bar,
+                                        color: Colors.white,
+                                      ),
+                                      snackPosition: SnackPosition.TOP,
+                                      backgroundColor: Colors.red,
+                                      colorText: Colors.white,
+                                    );
+                                  }
+                                }
+                              },
+                            ),
                           ),
-                          backgroundColor: const Color.fromRGBO(0, 162, 180, 1),
-                        ),
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            var connectivityResult =
-                                await (Connectivity().checkConnectivity());
-                            if (connectivityResult ==
-                                ConnectivityResult.mobile) {
-                              Get.snackbar(
-                                "Sem conexão com a internet!",
-                                "Verifique sua conexão e tente novamente!",
-                                icon: const Icon(
-                                  Icons
-                                      .signal_cellular_connected_no_internet_4_bar,
-                                  color: Colors.white,
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          loading
+                              ? Lottie.asset(
+                                  "assets/images/loading1.json",
+                                  width: 100,
+                                  height: 100,
+                                )
+                              : const SizedBox(
+                                  height: 0,
+                                  width: 0,
                                 ),
-                                snackPosition: SnackPosition.TOP,
-                                backgroundColor: Colors.red,
-                                colorText: Colors.white,
-                              );
-                            } else if (connectivityResult ==
-                                ConnectivityResult.wifi) {
-                              _onLoading();
-                              saveLogin(
-                                _nomeController.text.toString(),
-                                _senhaController.text.toString(),
-                              );
-                              controller
-                                  .login(
-                                    _nomeController.text.toString(),
-                                    _senhaController.text.toString(),
-                                  )
-                                  .then(
-                                    (value) => {
-                                      Timer(
-                                          const Duration(seconds: 2),
-                                          () => {
-                                                if (value == "S")
-                                                  {
-                                                    Get.offAll(
-                                                        const HomeSeparadorScreen())
-                                                  }
-                                                else if (value == "C")
-                                                  {
-                                                    Get.offAll(
-                                                        const HomeConferenteScreen())
-                                                  }
-                                                else
-                                                  {
-                                                    _onLoading(),
-                                                    Get.snackbar(
-                                                      value,
-                                                      "Usuário ou senha inexistente!",
-                                                      snackPosition:
-                                                          SnackPosition.TOP,
-                                                      backgroundColor:
-                                                          Colors.red,
-                                                      colorText: Colors.white,
-                                                    )
-                                                  }
-                                              }),
-                                    },
-                                  );
-                            } else {
-                              Get.snackbar(
-                                "Sem conexão com a internet!",
-                                "Verifique sua conexão e tente novamente!",
-                                icon: const Icon(
-                                  Icons
-                                      .signal_cellular_connected_no_internet_4_bar,
-                                  color: Colors.white,
-                                ),
-                                snackPosition: SnackPosition.TOP,
-                                backgroundColor: Colors.red,
-                                colorText: Colors.white,
-                              );
-                            }
-                          }
-                        },
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      height: 1.h,
-                    ),
-                    loading
-                        ? Lottie.asset(
-                            "assets/images/loading1.json",
-                            width: 100,
-                            height: 100,
-                          )
-                        : const SizedBox(
-                            height: 0,
-                            width: 0,
-                          ),
-                  ],
-                ),
-              )
-            ]),
+                  ),
+                )
+              ]),
+            ),
           ),
         ),
       ),

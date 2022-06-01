@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -136,7 +135,7 @@ class _MinhasSeparacoesScreenState extends State<MinhasSeparacoesScreen> {
                                 onSearch(text);
                               },
                               decoration: const InputDecoration(
-                                hintText: "Pesquisa (NRPREOC)",
+                                hintText: "Pesquisa )",
                               ),
                               controller: pesquisaController,
                             ),

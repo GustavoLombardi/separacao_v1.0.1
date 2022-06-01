@@ -84,6 +84,8 @@ class _HomeConferenteScreenState extends State<HomeConferenteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
     // Timer mytimer = Timer.periodic(Duration(seconds: 5), (timer) {
     //   showNotification();
     // });
@@ -112,41 +114,24 @@ class _HomeConferenteScreenState extends State<HomeConferenteScreen> {
               loginController: loginController,
             ),
             backgroundColor: Theme.of(context).colorScheme.secondary,
-            // appBar: AppBar(
-            //   elevation: 0,
-            //   backgroundColor: Theme.of(context).colorScheme.secondary,
-            //   title: Text(
-            //     'Olá,\t${loginController.nomeusu.value.toLowerCase().capitalize}',
-            //     style: TextStyle(
-            //       fontSize: 20.sp,
-            //       color: Colors.white,
-            //       fontWeight: FontWeight.bold,
-            //     ),
-            //   ),
-            //   actions: [
-            //     IconButton(
-            //       onPressed: () {
-            //         // scanQR(loginStore, produtosConferenteStore, db);
-            //       },
-            //       icon: const Icon(Icons.qr_code),
-            //     ),
-            //   ],
-            // ),
             body: Column(children: [
               Container(
                 color: const Color.fromRGBO(42, 44, 43, 1),
                 child: ClipPath(
                   clipper: RoundedClipper(),
                   child: Container(
-                    height: 300,
+                    height: queryData.size.height / 2.3,
                     color: Colors.white,
                     child: Stack(
                       children: [
-                        FadeAnimation(
-                          1.5,
-                          Align(
-                            alignment: const Alignment(-1.60, 0.00),
-                            child: Image.asset(
+                        Positioned(
+                          top: queryData.size.height * 0.1,
+                          right: queryData.size.width * 0.6,
+                          //Align(
+                          //  alignment: const Alignment(-1.60, 0.00),
+                          child: FadeAnimation(
+                            1.5,
+                            Image.asset(
                               'assets/images/box2.png',
                               height: 260,
                               color: const Color.fromRGBO(196, 161, 109, 1)
@@ -154,11 +139,12 @@ class _HomeConferenteScreenState extends State<HomeConferenteScreen> {
                             ),
                           ),
                         ),
-                        FadeAnimation(
-                          1.5,
-                          Align(
-                            alignment: const Alignment(2.00, -2.00),
-                            child: Image.asset(
+                        Positioned(
+                          bottom: queryData.size.height * 0.01,
+                          left: queryData.size.width * 0.6,
+                          child: FadeAnimation(
+                            1.5,
+                            Image.asset(
                               'assets/images/box.png',
                               height: 260,
                               color: const Color.fromRGBO(196, 161, 109, 1)
@@ -219,66 +205,70 @@ class _HomeConferenteScreenState extends State<HomeConferenteScreen> {
                     childAspectRatio: 4 / 3,
                     crossAxisCount: 2,
                     padding: const EdgeInsets.only(
-                        bottom: 20, left: 20, right: 20, top: 70),
+                        bottom: 20, left: 20, right: 20, top: 10),
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20,
                     // shrinkWrap: true,
                     children: [
-                      FadeAnimation(
-                        1.5,
-                        CardHomeConferente(
-                          tela: 5,
-                          nome: 'Minhas Conferências',
-                          image: 'assets/images/separacao.jpeg',
-                          loginController: loginController,
-                          loadingConferenteController:
-                              loadingConferenteController,
-                        ),
+                      CardHomeConferente(
+                        tela: 5,
+                        nome: 'Minhas Conferências',
+                        image: 'assets/images/separacao.jpeg',
+                        loginController: loginController,
+                        loadingConferenteController:
+                            loadingConferenteController,
                       ),
-                      FadeAnimation(
-                        1.5,
-                        CardHomeConferente(
-                          tela: 1,
-                          nome: 'Disponíveis',
-                          image: 'assets/images/separacao.jpeg',
-                          loginController: loginController,
-                          loadingConferenteController:
-                              loadingConferenteController,
-                        ),
+
+                      // FadeAnimation(
+                      //   1.5,
+                      //   CardHomeConferente(
+                      //     tela: 1,
+                      //     nome: 'Disponíveis',
+                      //     image: 'assets/images/separacao.jpeg',
+                      //     loginController: loginController,
+                      //     loadingConferenteController:
+                      //         loadingConferenteController,
+                      //   ),
+                      // ),
+
+                      CardHomeConferente(
+                        tela: 3,
+                        nome: 'Liberadas',
+                        image: 'assets/images/separacao.jpeg',
+                        loginController: loginController,
+                        loadingConferenteController:
+                            loadingConferenteController,
                       ),
-                      FadeAnimation(
-                        1.5,
-                        CardHomeConferente(
-                          tela: 2,
-                          nome: 'Em Andamento',
-                          image: 'assets/images/separacao.jpeg',
-                          loginController: loginController,
-                          loadingConferenteController:
-                              loadingConferenteController,
-                        ),
+
+                      CardHomeConferente(
+                        tela: 2,
+                        nome: 'Em Andamento',
+                        image: 'assets/images/separacao.jpeg',
+                        loginController: loginController,
+                        loadingConferenteController:
+                            loadingConferenteController,
                       ),
-                      FadeAnimation(
-                        1.5,
-                        CardHomeConferente(
-                          tela: 3,
-                          nome: 'Liberadas',
-                          image: 'assets/images/separacao.jpeg',
-                          loginController: loginController,
-                          loadingConferenteController:
-                              loadingConferenteController,
-                        ),
+
+                      CardHomeConferente(
+                        tela: 4,
+                        nome: 'Entrada',
+                        image: 'assets/images/separacao.jpeg',
+                        loginController: loginController,
+                        loadingConferenteController:
+                            loadingConferenteController,
                       ),
-                      FadeAnimation(
-                        1.5,
-                        CardHomeConferente(
-                          tela: 4,
-                          nome: 'Complementos',
-                          image: 'assets/images/reconferencias.jpeg',
-                          loginController: loginController,
-                          loadingConferenteController:
-                              loadingConferenteController,
-                        ),
-                      ),
+
+                      // FadeAnimation(
+                      //   1.5,
+                      //   CardHomeConferente(
+                      //     tela: 4,
+                      //     nome: 'Complementos',
+                      //     image: 'assets/images/reconferencias.jpeg',
+                      //     loginController: loginController,
+                      //     loadingConferenteController:
+                      //         loadingConferenteController,
+                      //   ),
+                      // ),
                     ]),
               ),
             ])));

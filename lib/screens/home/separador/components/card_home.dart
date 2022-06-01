@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sizer/sizer.dart';
 import 'package:teste_tela/controllers/separador/loading_separador_controller.dart';
 import 'package:teste_tela/screens/grupos/separador/grupo_screen.dart';
 import 'package:teste_tela/screens/home/telas.dart';
@@ -63,16 +64,53 @@ class _CardHomeSeparadorState extends State<CardHomeSeparador> {
             fit: BoxFit.cover,
           ),
         ),
-        child: Align(
-            alignment: const Alignment(-0.60, 0.90),
-            child: Text(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
               widget.nome,
               style: GoogleFonts.poppins(
                   textStyle: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
-            )),
+            ),
+            widget.tela == Tela.minhaseparacoes
+                ? Obx(() {
+                    return Text(
+                      "QTD:\t${widget.controller!.qtdMinhasSeparacoes}",
+                      style: TextStyle(
+                        fontSize: 10.sp,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  })
+                : widget.tela == Tela.meugrupo
+                    ? Obx(() {
+                        return Text(
+                          "QTD:\t${widget.controller!.qtdMeuGrupo}",
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        );
+                      })
+                    : widget.tela == Tela.reconferencias
+                        ? Obx(() {
+                            return Text(
+                              "QTD:\t${widget.controller!.qtdReconferencias}",
+                              style: TextStyle(
+                                fontSize: 10.sp,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            );
+                          })
+                        : Container(),
+          ],
+        ),
       ),
     );
   }

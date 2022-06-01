@@ -35,6 +35,8 @@ class _HomeSeparadorScreenState extends State<HomeSeparadorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
     return WillPopScope(
       onWillPop: () async {
         Get.defaultDialog(
@@ -66,15 +68,18 @@ class _HomeSeparadorScreenState extends State<HomeSeparadorScreen> {
               child: ClipPath(
                 clipper: RoundedClipper(),
                 child: Container(
-                  height: 300,
+                  height: queryData.size.height / 2.3,
                   color: Colors.white,
                   child: Stack(
                     children: [
-                      FadeAnimation(
-                        1.5,
-                        Align(
-                          alignment: const Alignment(-1.60, 0.00),
-                          child: Image.asset(
+                      Positioned(
+                        top: queryData.size.height * 0.1,
+                        right: queryData.size.width * 0.6,
+                        //Align(
+                        //  alignment: const Alignment(-1.60, 0.00),
+                        child: FadeAnimation(
+                          1.5,
+                          Image.asset(
                             'assets/images/box2.png',
                             height: 260,
                             color: const Color.fromRGBO(196, 161, 109, 1)
@@ -82,11 +87,12 @@ class _HomeSeparadorScreenState extends State<HomeSeparadorScreen> {
                           ),
                         ),
                       ),
-                      FadeAnimation(
-                        1.5,
-                        Align(
-                          alignment: const Alignment(2.00, -2.00),
-                          child: Image.asset(
+                      Positioned(
+                        top: queryData.size.height * 0.1,
+                        left: queryData.size.width * 0.7,
+                        child: FadeAnimation(
+                          1.5,
+                          Image.asset(
                             'assets/images/box.png',
                             height: 260,
                             color: const Color.fromRGBO(196, 161, 109, 1)
@@ -96,45 +102,38 @@ class _HomeSeparadorScreenState extends State<HomeSeparadorScreen> {
                       ),
                       Row(
                         children: [
-                          FadeAnimation(
-                            1.4,
-                            IconButton(
-                              icon: const Icon(Icons.menu),
-                              onPressed: () {
-                                _scaffoldKey.currentState!.openDrawer();
-                              },
-                            ),
+                          IconButton(
+                            icon: const Icon(Icons.menu),
+                            onPressed: () {
+                              _scaffoldKey.currentState!.openDrawer();
+                            },
                           ),
                           const SizedBox(
                             width: 20,
                           ),
                           Center(
-                            child: FadeAnimation(
-                              1.5,
-                              RichText(
-                                text: TextSpan(
-                                  text: 'Olá \n',
-                                  style: GoogleFonts.poppins(
-                                      textStyle: const TextStyle(
-                                          fontSize: 35,
-                                          fontWeight: FontWeight.w600,
-                                          color:
-                                              Color.fromRGBO(0, 162, 180, 1))),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: loginController.nomeusu.value,
-                                      style: GoogleFonts.poppins(
-                                          textStyle: const TextStyle(
-                                              fontSize: 35,
-                                              fontWeight: FontWeight.w600,
-                                              color: Color.fromRGBO(
-                                                  42, 44, 43, 1))),
-                                    ),
-                                  ],
-                                ),
+                            child: RichText(
+                              text: TextSpan(
+                                text: 'Olá \n',
+                                style: GoogleFonts.poppins(
+                                    textStyle: const TextStyle(
+                                        fontSize: 35,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color.fromRGBO(0, 162, 180, 1))),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: loginController.nomeusu.value,
+                                    style: GoogleFonts.poppins(
+                                        textStyle: const TextStyle(
+                                            fontSize: 35,
+                                            fontWeight: FontWeight.w600,
+                                            color:
+                                                Color.fromRGBO(42, 44, 43, 1))),
+                                  ),
+                                ],
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ],
@@ -147,52 +146,45 @@ class _HomeSeparadorScreenState extends State<HomeSeparadorScreen> {
                 childAspectRatio: 4 / 3,
                 crossAxisCount: 2,
                 padding: const EdgeInsets.only(
-                    bottom: 20, left: 20, right: 20, top: 70),
+                    bottom: 20, left: 20, right: 20, top: 10), //10),
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 20,
                 // shrinkWrap: true,
                 children: [
-                  FadeAnimation(
-                    1.5,
-                    CardHomeSeparador(
-                      tela: Tela.minhaseparacoes,
-                      nome: 'Minhas Separações',
-                      imagem: 'assets/images/separacao.jpeg',
-                      controller: loadingSeparadorController,
-                    ),
+                  CardHomeSeparador(
+                    tela: Tela.minhaseparacoes,
+                    nome: 'Minhas Separações',
+                    imagem: 'assets/images/separacao.jpeg',
+                    controller: loadingSeparadorController,
                   ),
+
                   // SizedBox(
                   //   height: 1.h,
                   // ),
-                  FadeAnimation(
-                    1.8,
-                    CardHomeSeparador(
-                      tela: Tela.meugrupo,
-                      nome: 'Ordens de Carga',
-                      imagem: 'assets/images/armazem.jpeg',
-                      controller: loadingSeparadorController,
-                    ),
+
+                  CardHomeSeparador(
+                    tela: Tela.meugrupo,
+                    nome: 'Ordens de Carga',
+                    imagem: 'assets/images/armazem.jpeg',
+                    controller: loadingSeparadorController,
                   ),
+
                   //  SizedBox(
                   //    height: 1.h,
                   //  ),
-                  FadeAnimation(
-                    2.1,
-                    CardHomeSeparador(
-                      tela: Tela.reconferencias,
-                      nome: 'Reconferências',
-                      imagem: 'assets/images/reconferencias.jpeg',
-                      controller: loadingSeparadorController,
-                    ),
+
+                  CardHomeSeparador(
+                    tela: Tela.reconferencias,
+                    nome: 'Reconferências',
+                    imagem: 'assets/images/reconferencias.jpeg',
+                    controller: loadingSeparadorController,
                   ),
-                  FadeAnimation(
-                    2.3,
-                    CardHomeSeparador(
-                      tela: Tela.reconferencias,
-                      nome: 'Empilhadeira',
-                      imagem: 'assets/images/empilhadeira.jpeg',
-                      controller: loadingSeparadorController,
-                    ),
+
+                  CardHomeSeparador(
+                    tela: Tela.reconferencias,
+                    nome: 'Empilhadeira',
+                    imagem: 'assets/images/empilhadeira.jpeg',
+                    controller: loadingSeparadorController,
                   ),
                 ],
               ),

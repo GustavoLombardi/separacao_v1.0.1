@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:teste_tela/controllers/conferente/loading_conferente_controller.dart';
 import 'package:teste_tela/controllers/login_controller.dart';
+import 'package:teste_tela/screens/entrada/entrada.dart';
 import 'package:teste_tela/screens/grupos/conferente/grupos_screen.dart';
 import 'package:teste_tela/screens/minhas_separacoes_conferencias/conferente/minhas_conferencias_screen.dart';
 
@@ -56,9 +57,7 @@ class _CardHomeConferenteState extends State<CardHomeConferente> {
           );
         } else if (widget.tela == 4) {
           Get.offAll(
-            const GruposConferenteScreen(
-              status: "A",
-            ),
+            const EntradaScreen(),
           );
         } else if (widget.tela == 5) {
           Get.offAll(const ConferenciasScreen());
@@ -97,7 +96,7 @@ class _CardHomeConferenteState extends State<CardHomeConferente> {
             widget.tela == 1
                 ? Obx(() {
                     return Text(
-                      "QTD:\t${widget.loadingConferenteController.qtdDisponiveis}",
+                      "QTD:${widget.loadingConferenteController.qtdDisponiveis}",
                       style: TextStyle(
                         fontSize: 10.sp,
                         color: Colors.white,

@@ -30,6 +30,8 @@ class _ProdutosSeparadorScreenState extends State<ProdutosSeparadorScreen> {
   final separacaoController = Get.put(SeparacaoController());
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
     return WillPopScope(
       onWillPop: () async {
         Get.offAll(const MinhasSeparacoesScreen());
@@ -177,16 +179,18 @@ class _ProdutosSeparadorScreenState extends State<ProdutosSeparadorScreen> {
                         () => Scrollbar(
                           child: Stack(
                             children: [
-                              Align(
-                                alignment: const Alignment(2.20, -1.00),
+                              Positioned(
+                                bottom: queryData.size.height * 0.4,
+                                left: queryData.size.width * 0.5,
                                 child: Image.asset(
                                   "assets/images/box.png",
                                   color: const Color.fromRGBO(196, 161, 109, 1)
                                       .withOpacity(0.4),
                                 ),
                               ),
-                              Align(
-                                alignment: const Alignment(-2.80, 1.00),
+                              Positioned(
+                                top: queryData.size.height * 0.4,
+                                right: queryData.size.width * 0.5,
                                 child: Image.asset(
                                   "assets/images/box2.png",
                                   color: const Color.fromRGBO(196, 161, 109, 1)
